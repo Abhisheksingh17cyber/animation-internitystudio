@@ -8,20 +8,57 @@ import Image from "next/image";
 gsap.registerPlugin(ScrollTrigger);
 
 const allProducts = [
-  { tag: "Botanical", name: "Green Vitality", desc: "Strawberry, blueberry, cucumber & pomegranate.", price: "£12", img: "/product-green-vitality.jpg", color: "rgba(60,130,60,0.15)" },
-  { tag: "Citrus", name: "Citrus Glow", desc: "Orange, turmeric, ginger & Manuka honey.", price: "£11", img: "/product-citrus-glow.jpg", color: "rgba(201,140,30,0.15)" },
-  { tag: "Berry", name: "Berry Bliss", desc: "Strawberry, blueberry & pomegranate.", price: "£13", img: "/product-berry-bliss.jpg", color: "rgba(160,30,60,0.15)" },
-  { tag: "Botanical", name: "White Petal", desc: "White rose, lychee, oolong & elderflower.", price: "£14", img: "/product-citrus-glow.jpg", color: "rgba(220,200,200,0.15)" },
-  { tag: "Citrus", name: "Gold Rush", desc: "Meyer lemon, yuzu, raw ginger & turmeric.", price: "£12", img: "/product-citrus-glow.jpg", color: "rgba(201,168,76,0.15)" },
-  { tag: "Berry", name: "Midnight Currant", desc: "Blackcurrant, black cherry, hibiscus & cardamom.", price: "£13", img: "/product-berry-bliss.jpg", color: "rgba(80,40,120,0.18)" },
+  { tag: "Botanical", name: "Green Vitality", desc: "Strawberry, blueberry, cucumber & pomegranate.", price: "£12", priceValue: 12, img: "/product-green-vitality.jpg", color: "rgba(60,130,60,0.15)" },
+  { tag: "Citrus", name: "Citrus Glow", desc: "Orange, turmeric, ginger & Manuka honey.", price: "£11", priceValue: 11, img: "/product-citrus-glow.jpg", color: "rgba(201,140,30,0.15)" },
+  { tag: "Berry", name: "Berry Bliss", desc: "Strawberry, blueberry & pomegranate.", price: "£13", priceValue: 13, img: "/product-berry-bliss.jpg", color: "rgba(160,30,60,0.15)" },
+  { tag: "Botanical", name: "White Petal", desc: "White rose, lychee, oolong & elderflower.", price: "£14", priceValue: 14, img: "/product-citrus-glow.jpg", color: "rgba(220,200,200,0.15)" },
+  { tag: "Citrus", name: "Gold Rush", desc: "Meyer lemon, yuzu, raw ginger & turmeric.", price: "£12", priceValue: 12, img: "/product-citrus-glow.jpg", color: "rgba(201,168,76,0.15)" },
+  { tag: "Berry", name: "Midnight Currant", desc: "Blackcurrant, black cherry, hibiscus & cardamom.", price: "£13", priceValue: 13, img: "/product-berry-bliss.jpg", color: "rgba(80,40,120,0.18)" },
 ];
 
 const filters = ["All", "Botanical", "Citrus", "Berry"];
 
 export default function ProductsPage() {
   const [active, setActive] = useState("All");
+  const [loadingProduct, setLoadingProduct] = useState<string | null>(null);
 
   const visible = active === "All" ? allProducts : allProducts.filter((p) => p.tag === active);
+
+  const handleCheckout = async (product: { name: string; priceValue: number; img?: string }) => {
+    try {
+      setLoadingProduct(product.name);
+      
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: [{
+            name: product.name,
+            price: product.priceValue,
+            quantity: 1,
+            // Only add localhost fallback if image exists, though Stripe may block localhost images
+            image: product.img ? (product.img.startsWith('http') ? product.img : `http://localhost:3000${product.img}`) : undefined
+          }],
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("Checkout returned no URL", data);
+        alert(data.error || "Failed to initiate checkout. Please try again.");
+      }
+    } catch (err) {
+      console.error("Checkout error:", err);
+      alert("Something went wrong during checkout.");
+    } finally {
+      setLoadingProduct(null);
+    }
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -70,7 +107,13 @@ export default function ProductsPage() {
               A rare convergence of 12 botanicals — our most complex and celebrated formula. Designed for those who seek the extraordinary in every sip.
             </p>
             <span style={{ color: "var(--accent-gold)", fontFamily: "var(--font-heading)", fontSize: "1.5rem", display: "block", marginBottom: "1.5rem" }}>£18</span>
-            <a href="#" className="btn-gold">Add to Order</a>
+            <button 
+              className="btn-gold" 
+              onClick={() => handleCheckout({ name: "The Founder's Blend", priceValue: 18, img: "/product-founders-blend.jpg" })}
+              disabled={loadingProduct === "The Founder's Blend"}
+            >
+              {loadingProduct === "The Founder's Blend" ? "Processing..." : "Add to Order"}
+            </button>
           </div>
         </div>
 
@@ -114,7 +157,14 @@ export default function ProductsPage() {
               <p className="product-card-desc">{p.desc}</p>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span className="product-card-price">{p.price}</span>
-                <a href="#" className="btn-outline" style={{ padding: "0.5rem 1rem", fontSize: "0.7rem" }}>Add →</a>
+                <button 
+                  className="btn-outline" 
+                  style={{ padding: "0.5rem 1rem", fontSize: "0.7rem" }}
+                  onClick={() => handleCheckout(p)}
+                  disabled={loadingProduct === p.name}
+                >
+                  {loadingProduct === p.name ? "Wait" : "Add →"}
+                </button>
               </div>
             </div>
           ))}

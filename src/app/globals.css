@@ -1489,6 +1489,17 @@ button {
   .hero-meta { flex-direction: column; gap: 1.5rem; }
   .hero-full { height: 100dvh; }
   
+  /* Touch Target Minimum Heights */
+  .btn-gold,
+  .btn-outline,
+  .filter-btn,
+  .footer-icon-link {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
   /* Fluid Typography for Hero */
   .hero-script { font-size: clamp(3rem, 15vw, 5rem); }
   h1 { font-size: clamp(2.5rem, 10vw, 4rem); }

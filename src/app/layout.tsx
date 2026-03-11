@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Elixir — Pure Luxury Juices",
   description: "Cold-pressed, botanical luxury juices crafted at the intersection of nature and refinement.",
   keywords: "luxury juice, cold-pressed, botanical, natural, premium",
+  icons: {
+    icon: '/icon.png',
+  },
   openGraph: {
     title: "Elixir — Pure Luxury Juices",
     description: "Cold-pressed, botanical luxury juices crafted at the intersection of nature and refinement.",
