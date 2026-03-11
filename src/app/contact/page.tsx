@@ -42,7 +42,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── Contact Grid ── */}
-      <section>
+      <section className="section">
         <div className="contact-grid">
           {/* Form */}
           <div>

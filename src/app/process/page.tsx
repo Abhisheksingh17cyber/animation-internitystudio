@@ -106,7 +106,7 @@ export default function ProcessPage() {
       </div>
 
       {/* ── Stats ── */}
-      <section style={{ background: "var(--surface)", padding: "7rem 4rem" }}>
+      <section className="section" style={{ background: "var(--surface)" }}>
         <p className="overline" style={{ marginBottom: "1rem", textAlign: "center" }}>By the Numbers</p>
         <div className="process-stats" style={{
           display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "2rem", marginTop: "3rem",
@@ -125,8 +125,8 @@ export default function ProcessPage() {
       </section>
 
       {/* ── Ingredients ── */}
-      <section style={{ padding: "7rem 0 7rem" }}>
-        <div style={{ padding: "0 4rem", marginBottom: "2rem" }}>
+      <section className="section" style={{ paddingTop: "7rem", paddingBottom: "7rem" }}>
+        <div style={{ marginBottom: "2rem" }}>
           <p className="overline" style={{ marginBottom: "0.75rem" }}>Ingredient Spotlight</p>
           <h2 className="heading-md">The botanicals<br /><em style={{ color: "var(--accent-gold)", fontStyle: "italic" }}>behind the magic</em></h2>
         </div>

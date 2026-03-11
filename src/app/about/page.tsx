@@ -77,8 +77,8 @@ export default function AboutPage() {
       </section>
 
       {/* ── Philosophy ── */}
-      <section className="philosophy-section" style={{ padding: "8rem 4rem" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8rem", alignItems: "center" }}>
+      <section className="philosophy-section section">
+        <div className="about-hero" style={{ alignItems: "center" }}>
           <div>
             <p className="overline" style={{ marginBottom: "1rem" }}>Philosophy</p>
             <h2 className="heading-md" style={{ marginBottom: "2rem" }}>
@@ -124,7 +124,7 @@ export default function AboutPage() {
       </div>
 
       {/* ── Values ── */}
-      <section style={{ padding: "8rem 4rem" }}>
+      <section className="section">
         <p className="overline" style={{ marginBottom: "1rem" }}>What We Stand For</p>
         <h2 className="heading-md" style={{ marginBottom: "4rem", maxWidth: "480px" }}>
           Three pillars of <em style={{ color: "var(--accent-gold)", fontStyle: "italic" }}>our practice</em>

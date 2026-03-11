@@ -49,9 +49,9 @@ export default function ProductsPage() {
       </section>
 
       {/* ── Filter + Grid ── */}
-      <section style={{ padding: "6rem 4rem" }}>
+      <section className="section">
         {/* Featured card — Founder's Blend */}
-        <div className="founders-blend-card">
+        <div className="founders-blend-card" style={{ marginBottom: "4rem" }}>
           <div className="founders-blend-img-wrap">
             <Image
               src="/product-founders-blend.jpg"
