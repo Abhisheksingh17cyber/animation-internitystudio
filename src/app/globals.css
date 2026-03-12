@@ -1534,3 +1534,39 @@ button {
   .menu .link:hover { color: #a0a0a0; }
   .menu .link.active { color: var(--accent-gold); }
 }
+
+/* --- LUXURY APPLE-STYLE CURSOR --- */
+.lux-cursor {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform .15s ease, width .2s ease, height .2s ease;
+  z-index: 9999;
+  -webkit-backdrop-filter: blur(6px); /* Fix lint warning */
+  backdrop-filter: blur(6px);
+}
+
+.lux-cursor-dot {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.lux-cursor.hover {
+  width: 70px;
+  height: 70px;
+  border-color: rgba(255,255,255,0.6);
+}
+
+.lux-cursor.glow {
+  box-shadow: 0 0 25px rgba(255,255,255,0.6);
+}

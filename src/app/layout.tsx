@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
+import MotionBlurCursor from "@/components/MotionBlurCursor";
+import LuxCursor from "@/components/LuxCursor";
 import SmoothScroll from "@/components/SmoothScroll";
 
 export const metadata: Metadata = {
@@ -29,6 +31,8 @@ export default function RootLayout({
       <body>
         <SmoothScroll>
           <CustomCursor />
+          <MotionBlurCursor />
+          <LuxCursor />
           <Navbar />
           <main>{children}</main>
           <Footer />
